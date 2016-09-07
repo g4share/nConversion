@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
+    }
+}
+
+apply plugin: "com.github.kt3k.coveralls"
+
+description = '''Convert String = "98989" into an integer without using any library functions in java.
+    Give fastest way to do it and explain why your method is best.'''
+
+version = "0.1.0"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+apply from: 'dependencies.gradle'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile libraries.test
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = false
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
